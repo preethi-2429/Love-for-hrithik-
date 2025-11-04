@@ -413,4 +413,31 @@ function spawnSparkles(count=20){
     }, 60 + i*15);
 
     setTimeout(()=> {
-      s.style.transition = 'tr
+      s.style.transition = 'transform 1000ms cubic-bezier(.2,.9,.2,1), opacity 1000ms ease';
+      s.style.opacity = 0;
+      s.style.transform += ' scale(0.4)';
+    }, 900 + i*12);
+
+    setTimeout(()=> { try{ document.body.removeChild(s); } catch(e){} }, 2200 + i*12);
+  }
+}
+
+/* continue to letter after win */
+continueToLetter.addEventListener('click', ()=>{
+  hide(winPopup);
+  setTimeout(()=>{ show(letterPopup); setTimeout(()=> paper.classList.add('open'),80); }, 260);
+});
+
+/* close letter */
+closeLetterBtn.addEventListener('click', ()=> {
+  paper.classList.remove('open');
+  setTimeout(()=> hide(letterPopup), 260);
+});
+
+/* accessibility & small UI flourish */
+window.addEventListener('keydown', (e)=> { if(e.key==='Escape') document.querySelectorAll('.overlay').forEach(o=> hide(o)); });
+window.addEventListener('load', ()=> { setTimeout(()=> startBtn.classList.add('pop'),200); setTimeout(()=> startBtn.classList.remove('pop'),620); resetGame(); });
+
+</script>
+</body>
+</html>
