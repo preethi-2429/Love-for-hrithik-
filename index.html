@@ -4,139 +4,179 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>For Hrithik — Pixel Love 💗</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
 :root{
-  --bg:#0b0310; --accent:#ff6aa6; --muted:#b07b88; --soft:#fff6fb;
+  --bg:#0b0310; --accent:#ff6aa6; --muted:#6f5560; --soft:#fff6fb;
   --pixel-red:#e72b2b;
-  --letter-bg: #ffeef6; /* pastel pink for letter */
+  --letter-bg:#fff0f4; /* pastel pink for the letter popup */
+  --board-bg:#fff8fb;  /* pastel board background */
+  --bubble-pink: #ffdfea;
+  --bubble-shadow: rgba(255,160,200,0.14);
 }
 html,body{height:100%;margin:0;font-family:Poppins,system-ui,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--soft);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-/* Pixel rooftop background (parallax float) */
+/* background decorative */
 .pixel-bg{position:fixed;inset:0;z-index:-5;overflow:hidden;background:linear-gradient(180deg,#0b0310,#2b0c2e);}
-.pixel-bg .parallax{animation:floatBg 20s linear infinite;}
+.pixel-bg .parallax{animation:floatBg 20s linear infinite}
 @keyframes floatBg{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
-.moon{position:absolute;width:160px;height:160px;border-radius:50%;left:10%;top:6%;background:radial-gradient(circle at 30% 25%, #fff3f8 0%, #ffd2ec 40%);filter:blur(.5px)}
+.moon{position:absolute;width:140px;height:140px;border-radius:50%;left:8%;top:6%;background:radial-gradient(circle at 30% 25%, #fff3f8 0%, #ffd2ec 40%);filter:blur(.5px)}
 .stars{position:absolute;inset:0;pointer-events:none}
 .stars i{position:absolute;width:3px;height:3px;background:#ffdff0;border-radius:2px;opacity:.9}
-.city{position:absolute;bottom:0;left:0;right:0;height:220px;display:flex;align-items:flex-end;gap:4px;padding:0 8px;box-sizing:border-box}
-.b{width:32px;background:#21062a;height:46%}
-.b.x1{height:60%}.b.x2{height:72%}.b.x3{height:44%}.b.x4{height:80%}.b.x5{height:34%}
-.b.light{background:linear-gradient(180deg,#2b072f,#1a0320)}
 
-/* Rooftop couple */
-.rooftop{position:absolute;left:50%;transform:translateX(-50%);bottom:70px;width:640px;max-width:92vw;height:180px;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
-.platform{width:480px;height:36px;background:linear-gradient(180deg,#2b0e2b,#19051a);border-top:8px solid rgba(255,210,240,0.06);border-radius:6px}
-.couple{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:flex-end}
-.head{width:40px;height:40px;border-radius:6px;border:4px solid #ff9ecb;display:flex;align-items:center;justify-content:center;font-size:14px;background:#ffdfea;color:#22080b}
-.body{width:34px;height:46px;margin-top:6px;border-radius:4px;border:3px solid #ff85b5;background:#ffbcd6}
-.gwen .head{background:#eaf6ff;border-color:#8bb9ff;color:#05293a}
-.gwen .body{background:#bfe7ff;border-color:#7ab5ff}
-
-/* UI */
-.ui-card{width:min(820px,96%);background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));border-radius:14px;padding:18px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.36);backdrop-filter:blur(6px);border:6px solid rgba(255,210,240,0.02);z-index:20}
+/* UI card */
+.ui-card{width:min(820px,96%);background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));border-radius:14px;padding:18px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.36);backdrop-filter:blur(6px);border:6px solid rgba(255,210,240,0.02);z-index:20;position:relative}
 h1{font-family:"Press Start 2P",monospace;color:var(--accent);margin:0 0 8px 0}
 .small{font-size:13px;color:var(--muted);margin:0 0 12px 0}
-.big-btn{display:inline-block;padding:14px 18px;border-radius:12px;background:linear-gradient(180deg,#fff,#ffeef8);border:10px solid rgba(255,200,230,0.9);box-shadow:0 12px 0 rgba(255,150,200,0.28);font-family:"Press Start 2P",monospace;color:var(--accent);cursor:pointer;font-size:13px}
+.big-btn{display:inline-block;padding:14px 18px;border-radius:12px;background:linear-gradient(180deg,#fff,#ffeef8);border:8px solid rgba(255,200,230,0.9);box-shadow:0 10px 0 rgba(255,150,200,0.28);font-family:"Press Start 2P",monospace;color:var(--accent);cursor:pointer;font-size:13px}
 .big-btn:active{transform:translateY(6px);box-shadow:none}
 
 /* overlays */
-.overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:90;background:rgba(0,0,0,0.45);visibility:hidden;opacity:0;transition:opacity .18s,visibility .18s}
+.overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:120;background:rgba(0,0,0,0.45);visibility:hidden;opacity:0;transition:opacity .18s,visibility .18s}
 .overlay.show{visibility:visible;opacity:1}
-.modal{width:min(520px,94%);background:linear-gradient(180deg,#fff,#fff7fb);border-radius:12px;padding:16px;text-align:center;border:8px solid rgba(255,210,240,0.95);box-shadow:0 12px 40px rgba(12,6,14,0.22)}
+.modal{width:min(560px,94%);background:linear-gradient(180deg,#fff,#fff7fb);border-radius:12px;padding:16px;text-align:center;border:8px solid rgba(255,210,240,0.95);box-shadow:0 12px 40px rgba(12,6,14,0.22)}
 .modal h2{font-family:"Press Start 2P",monospace;font-size:13px;margin:0 0 8px;color:var(--accent)}
 .modal p{margin:0 0 12px;color:var(--muted);font-size:14px}
 
+/* cute pastel bubble (Style A) */
+.cute-bubble{
+  position:fixed;
+  left:50%; top:40%;
+  transform:translate(-50%,-50%) scale(.96);
+  background: linear-gradient(180deg,var(--bubble-pink), #fffafc);
+  border-radius:18px;
+  padding:18px 20px;
+  box-shadow: 0 18px 40px var(--bubble-shadow);
+  z-index:250;
+  width:min(420px,92%);
+  text-align:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .22s, transform .25s;
+  border:3px solid rgba(255,200,220,0.86);
+}
+.cute-bubble.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1);}
+
+/* bubble text */
+.cute-bubble h3{margin:0;font-family:Poppins,system-ui;font-weight:600;color:#5b2a3a}
+.cute-bubble p{margin:8px 0 0 0;color:#6a4650;font-size:15px;line-height:1.35}
+
+/* little heart floaters around bubble */
+.bubble-heart{position:absolute;width:22px;height:22px;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.6);transition:all 900ms cubic-bezier(.2,.9,.2,1);filter:drop-shadow(0 8px 16px rgba(200,20,40,0.12))}
+
+/* layout helpers */
 .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .btn{padding:10px 12px;border-radius:9px;border:6px solid rgba(255,160,210,0.9);background:linear-gradient(180deg,#fff,#fff0f6);color:var(--accent);cursor:pointer;font-family:"Press Start 2P",monospace;font-size:11px;box-shadow:0 8px 0 rgba(255,155,200,0.28)}
 .btn:active{transform:translateY(4px);box-shadow:0 3px 0 rgba(255,150,200,0.12)}
-.pixel-link{display:inline-block;padding:8px 10px;border-radius:10px;border:10px solid rgba(255,210,240,0.95);background:linear-gradient(180deg,#fff,#fff6fb);cursor:pointer;font-family:"Press Start 2P",monospace;color:var(--accent);font-size:11px}
 
-/* letter (soft pastel pink background per your choice 2.b) */
-.letter-card{width:100%;max-width:420px;margin:8px auto;perspective:900px}
+/* board & cells (pastel board background per request) */
+.board-area{background:var(--board-bg);padding:14px;border-radius:12px;border:6px solid rgba(255,230,240,0.6);display:inline-block}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:260px;max-width:86vw;margin:10px auto;background:transparent;padding:8px;border-radius:8px}
+.cell{height:72px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 0 rgba(255,200,220,0.18);user-select:none}
+.cell.disabled{cursor:not-allowed;opacity:0.95}
+
+/* user heart image and cpu X */
+.user-heart-img{width:56px;height:56px;object-fit:contain;display:block;image-rendering:pixelated}
+.cpu-x{font-size:34px;color:#222;letter-spacing:2px;font-weight:700}
+
+/* hearts layer */
+#heartsLayer{position:fixed;inset:0;pointer-events:none;z-index:115;overflow:hidden}
+
+/* burst */
+#burstContainer{position:fixed;inset:0;z-index:220;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.big-burst-heart-img{width:120px;height:120px;transform:scale(0);opacity:0;transition:transform .32s cubic-bezier(.2,.9,.3,1), opacity .32s;filter: drop-shadow(0 12px 24px rgba(255,60,140,0.18))}
+.big-burst-heart-img.show{transform:scale(1);opacity:1}
+.burst-piece-img{position:fixed;width:18px;height:18px;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.9);transition:transform 900ms cubic-bezier(.2,.9,.2,1),opacity 900ms ease;filter:drop-shadow(0 6px 18px rgba(200,40,80,0.12));}
+.sparkle{position:fixed;width:8px;height:8px;background:#ffea75;border-radius:2px;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.6);transition:transform 900ms cubic-bezier(.2,.9,.2,1),opacity 900ms ease;filter: drop-shadow(0 6px 8px rgba(255,200,120,0.08));}
+
+/* letter pastel */
 .paper{width:100%;background:var(--letter-bg);border-radius:10px;padding:14px;transform-origin:top center;transform:rotateX(-90deg) translateY(-10px);transition:transform .6s;border:6px dashed rgba(220,140,170,0.12);color:#3a2e33;font-size:15px;text-align:left}
 .paper.open{transform:rotateX(0deg) translateY(0)}
 
-/* tic tac toe */
-.board{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:260px;max-width:86vw;margin:10px auto}
-.cell{height:72px;background:linear-gradient(180deg,#fff,#fff6fb);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 0 rgba(255,200,220,0.28);user-select:none;font-family:"Press Start 2P",monospace}
-.cell.disabled{cursor:not-allowed;opacity:0.85}
-
-/* user heart image inside cell (medium size, per 2.b) */
-.user-heart-img{width:56px;height:56px;object-fit:contain;display:block;}
-
-/* cpu X style */
-.cpu-x{font-size:34px;color:#222;letter-spacing:2px;font-weight:700;}
-
-/* hearts layer */
-#heartsLayer{position:fixed;inset:0;pointer-events:none;z-index:85;overflow:hidden}
-
-/* burst container */
-#burstContainer{position:fixed;inset:0;z-index:200;pointer-events:none;display:flex;align-items:center;justify-content:center}
-.big-burst-heart-img{width:120px;height:120px;transform:scale(0);opacity:0;transition:transform .32s cubic-bezier(.2,.9,.3,1), opacity .32s;filter: drop-shadow(0 12px 24px rgba(255,60,140,0.18))}
-.big-burst-heart-img.show{transform:scale(1);opacity:1}
-
-/* burst-piece: pixel heart image */
-.burst-piece-img{position:fixed;width:18px;height:18px;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.9);transition:transform 900ms cubic-bezier(.2,.9,.2,1),opacity 900ms ease;filter:drop-shadow(0 6px 18px rgba(200,40,80,0.12));}
-
-/* pixel sparkle (tiny yellow square stars) */
-.sparkle{position:fixed;width:8px;height:8px;background:#ffea75;border-radius:2px;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.6);transition:transform 900ms cubic-bezier(.2,.9,.2,1),opacity 900ms ease;filter: drop-shadow(0 6px 8px rgba(255,200,120,0.08));}
-
-/* responsive */
-@media(max-width:520px){.cell{height:56px}.user-heart-img{width:44px;height:44px}.cpu-x{font-size:26px}.big-burst-heart-img{width:86px;height:86px}.paper{font-size:14px}}
+/* small screens */
+@media(max-width:520px){
+  .cell{height:56px}
+  .user-heart-img{width:44px;height:44px}
+  .cpu-x{font-size:26px}
+  .big-burst-heart-img{width:86px;height:86px}
+  .paper{font-size:14px}
+}
 </style>
 </head>
 <body>
 
-<!-- Pixel background scene -->
+<!-- decorative background -->
 <div class="pixel-bg">
   <div class="parallax">
     <div class="moon"></div>
     <div class="stars" id="stars"></div>
     <div class="city" id="city"></div>
-    <div class="rooftop"><div class="platform"></div>
-      <div class="couple">
-        <div class="char leftChar"><div class="head">:)</div><div class="body"></div></div>
-        <div class="char gwen rightChar"><div class="head">:D</div><div class="body"></div></div>
-      </div>
+  </div>
+</div>
+
+<main style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box;position:relative;z-index:10">
+  <div class="ui-card">
+    <h1>For Hrithik 💗</h1>
+    <p class="small">A little pastel-pixel surprise — open and be honest 🥺</p>
+    <button id="startBtn" class="big-btn" aria-haspopup="dialog" aria-controls="qPopup">Click here my love 🌷</button>
+    <div style="margin-top:10px;font-size:12px;color:var(--muted)">Made with rose milk & pixel love</div>
+  </div>
+</main>
+
+<!-- falling hearts layer -->
+<div id="heartsLayer" aria-hidden="true"></div>
+
+<!-- burst container -->
+<div id="burstContainer" aria-hidden="true"><img id="bigBurstHeartImg" class="big-burst-heart-img" src="" alt=""></div>
+
+<!-- cute YES bubble (soft rounded pastel box) -->
+<div id="cuteYesBubble" class="cute-bubble" aria-hidden="true" role="status">
+  <div style="position:relative;">
+    <h3>Yesss!! I knew it 😎</h3>
+    <p id="cuteYesText">Awww my handsome, gorgeous, beautiful, pretty, lovely baby!! 🥹💖<br>Since you love me, I'll buy you a jersey for youuuu 😚😚🫶🏻</p>
+    <!-- floating hearts will be positioned around this bubble -->
+    <img src="" id="bh1" class="bubble-heart" style="left:12%;top:-12%">
+    <img src="" id="bh2" class="bubble-heart" style="left:88%;top:-8%">
+    <img src="" id="bh3" class="bubble-heart" style="left:6%;top:88%">
+    <img src="" id="bh4" class="bubble-heart" style="left:92%;top:82%">
+    <div style="margin-top:14px" class="row"><button id="okYesBtn" class="btn">Okay baby 😚</button></div>
+  </div>
+</div>
+
+<!-- cute NO bubble (sad confirmation) -->
+<div id="cuteNoBubble" class="cute-bubble" aria-hidden="true" role="alert">
+  <div style="position:relative;">
+    <h3>Nooo 🥺</h3>
+    <p id="cuteNoText">Don't break my heart, baby... I might cry 😢💔</p>
+    <div style="margin-top:12px" class="row">
+      <button id="noConfirmYes" class="btn">I'm sure</button>
+      <button id="noConfirmNo" class="btn">Wait — I love you</button>
     </div>
   </div>
 </div>
 
-<!-- UI -->
-<main style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box;z-index:20;position:relative">
-  <div class="ui-card">
-    <h1>For Hrithik 💗</h1>
-    <p class="small">A little pixel surprise — open and be honest 🥺</p>
-    <button id="startBtn" class="big-btn">Hey love — click me 🌷</button>
-    <div style="margin-top:8px;font-size:12px;color:var(--muted)">Made with rose milk & pixel love</div>
-  </div>
-</main>
-
-<!-- hearts layer -->
-<div id="heartsLayer"></div>
-
-<!-- burst container -->
-<div id="burstContainer" aria-hidden="true">
-  <img id="bigBurstHeartImg" class="big-burst-heart-img" src="" alt="burst heart">
-</div>
-
-<!-- INITIAL POPUP -->
-<div id="qPopup" class="overlay" role="dialog" aria-modal="true">
-  <div class="modal"><h2>Do you love your pasandida aurat🌷😚💗 ?</h2><p class="small">Be honest — your heart matters ✨</p>
-    <div class="row"><button id="yesBtn" class="btn">Yes</button><button id="noBtn" class="btn">No</button></div>
+<!-- ASK POPUP (fallback modal used earlier) -->
+<div id="qPopup" class="overlay" role="dialog" aria-modal="true" aria-labelledby="qTitle">
+  <div class="modal" id="qModal">
+    <h2 id="qTitle">Do you love your pasandida aurat 🌷 ?</h2>
+    <p class="small">Be honest — your heart matters</p>
+    <div class="row">
+      <button id="yesBtn" class="btn">Yes</button>
+      <button id="noBtn" class="btn">No</button>
+    </div>
   </div>
 </div>
 
 <!-- GAME POPUP -->
-<div id="gamePopup" class="overlay">
-  <div class="modal"><h2>Love Game — Tic Tac Toe</h2><p class="small">You're ❤️. CPU is X. Win my heart!</p>
-    <div class="board" id="board">
-      <div class="cell" data-i="0"></div><div class="cell" data-i="1"></div><div class="cell" data-i="2"></div>
-      <div class="cell" data-i="3"></div><div class="cell" data-i="4"></div><div class="cell" data-i="5"></div>
-      <div class="cell" data-i="6"></div><div class="cell" data-i="7"></div><div class="cell" data-i="8"></div>
+<div id="gamePopup" class="overlay" role="dialog" aria-modal="true" aria-labelledby="gameTitle">
+  <div class="modal" id="gameModal">
+    <h2 id="gameTitle">Love Game — Tic Tac Toe</h2>
+    <p class="small">You're the heart ❤️ — CPU is X. Win my heart!</p>
+    <div class="board-area" style="text-align:center">
+      <div class="board" id="board">
+        <div class="cell" data-i="0"></div><div class="cell" data-i="1"></div><div class="cell" data-i="2"></div>
+        <div class="cell" data-i="3"></div><div class="cell" data-i="4"></div><div class="cell" data-i="5"></div>
+        <div class="cell" data-i="6"></div><div class="cell" data-i="7"></div><div class="cell" data-i="8"></div>
+      </div>
     </div>
     <div class="row" style="margin-top:12px"><button id="resetBtn" class="btn">Reset</button><button id="closeGameBtn" class="btn">Close</button></div>
     <div id="gameMsg" style="margin-top:8px" class="small">Your turn</div>
@@ -144,15 +184,16 @@ h1{font-family:"Press Start 2P",monospace;color:var(--accent);margin:0 0 8px 0}
 </div>
 
 <!-- WIN POPUP -->
-<div id="winPopup" class="overlay">
-  <div class="modal"><h2>Yaayy!! 🎉</h2>
-    <p class="small" id="winText">Awww you won... but my heart was already yours, my hero 💖</p>
+<div id="winPopup" class="overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2>Yaayy!! 🎉</h2>
+    <p class="small" id="winText">Awww you won... but my heart was already yours, my hero</p>
     <div class="row"><button id="continueToLetter" class="btn">Continue</button></div>
   </div>
 </div>
 
-<!-- LETTER POPUP (pastel pink background) -->
-<div id="letterPopup" class="overlay">
+<!-- LETTER POPUP (pastel) -->
+<div id="letterPopup" class="overlay" role="dialog" aria-modal="true">
   <div class="modal">
     <h2 style="font-family:Poppins, sans-serif; color:var(--accent)">A letter for you</h2>
     <div class="letter-card"><div id="paper" class="paper">
@@ -172,67 +213,50 @@ h1{font-family:"Press Start 2P",monospace;color:var(--accent);margin:0 0 8px 0}
   </div>
 </div>
 
-<!-- BROKEN / JERSEY POPUPS -->
-<div id="brokenPopup" class="overlay"><div class="modal"><h2>🥺 Are you sure?</h2><p class="small">This will make me sad…</p>
-  <div class="row"><button id="finalYes" class="btn">Yes</button><button id="finalNo" class="btn">No</button></div></div></div>
-
-<div id="jerseyPopup" class="overlay"><div class="modal"><h2>I’ll buy you a jersey!!</h2><p class="small">Do you accept?</p>
-  <div class="row"><button id="jerseyYes" class="btn">Yes</button><button id="jerseyNo" class="btn">No</button></div></div></div>
+<!-- BROKEN / JERSEY POPUPS fallback -->
+<div id="brokenPopup" class="overlay"><div class="modal"><h2>🥺 Are you sure?</h2><p class="small">This will make me sad…</p><div class="row"><button id="finalYes" class="btn">Yes</button><button id="finalNo" class="btn">No</button></div></div></div>
+<div id="jerseyPopup" class="overlay"><div class="modal"><h2>I’ll buy you a jersey!!</h2><p class="small">Do you accept?</p><div class="row"><button id="jerseyYes" class="btn">Yes</button><button id="jerseyNo" class="btn">No</button></div></div></div>
 
 <script>
-/* ------------------------------
-   Embedded pixel assets (SVG data URIs)
-   - glossy 8-bit red heart (style C)
-   - small yellow pixel sparkle (we use CSS block for sparkle)
-   ------------------------------ */
+/* ---------------------
+  Pixel heart (glossy 8-bit) as data URI
+  --------------------- */
 const PIXEL_HEART_SVG = encodeURIComponent(`
-  <svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'>
-    <rect width='48' height='48' fill='transparent'/>
-    <!-- 8-bit heart blocks (glossy) -->
-    <g shape-rendering='crispEdges'>
-      <rect x='12' y='8' width='6' height='6' fill='#e72b2b'/>
-      <rect x='18' y='8' width='6' height='6' fill='#e72b2b'/>
-      <rect x='8' y='14' width='6' height='6' fill='#e72b2b'/>
-      <rect x='14' y='14' width='6' height='6' fill='#ff3b5b'/>
-      <rect x='20' y='14' width='6' height='6' fill='#ff3b5b'/>
-      <rect x='26' y='14' width='6' height='6' fill='#e72b2b'/>
-
-      <rect x='6' y='20' width='6' height='6' fill='#e72b2b'/>
-      <rect x='12' y='20' width='6' height='6' fill='#ff3b5b'/>
-      <rect x='18' y='20' width='6' height='6' fill='#ff2b48'/>
-      <rect x='24' y='20' width='6' height='6' fill='#ff3b5b'/>
-      <rect x='30' y='20' width='6' height='6' fill='#e72b2b'/>
-
-      <rect x='10' y='26' width='8' height='6' fill='#e72b2b'/>
-      <rect x='20' y='26' width='8' height='6' fill='#ff3b5b'/>
-      <rect x='14' y='32' width='12' height='6' fill='#e72b2b'/>
-
-      <!-- highlight -->
-      <rect x='18' y='10' width='2' height='2' fill='#ffd7e0' opacity='0.9'/>
-      <rect x='22' y='16' width='2' height='2' fill='#ffd7e0' opacity='0.7'/>
-    </g>
-  </svg>`);
-
+<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'>
+  <g shape-rendering='crispEdges'>
+    <rect x='12' y='8' width='6' height='6' fill='#e72b2b'/>
+    <rect x='18' y='8' width='6' height='6' fill='#e72b2b'/>
+    <rect x='8' y='14' width='6' height='6' fill='#e72b2b'/>
+    <rect x='14' y='14' width='6' height='6' fill='#ff3b5b'/>
+    <rect x='20' y='14' width='6' height='6' fill='#ff3b5b'/>
+    <rect x='26' y='14' width='6' height='6' fill='#e72b2b'/>
+    <rect x='6' y='20' width='6' height='6' fill='#e72b2b'/>
+    <rect x='12' y='20' width='6' height='6' fill='#ff3b5b'/>
+    <rect x='18' y='20' width='6' height='6' fill='#ff2b48'/>
+    <rect x='24' y='20' width='6' height='6' fill='#ff3b5b'/>
+    <rect x='30' y='20' width='6' height='6' fill='#e72b2b'/>
+    <rect x='10' y='26' width='8' height='6' fill='#e72b2b'/>
+    <rect x='20' y='26' width='8' height='6' fill='#ff3b5b'/>
+    <rect x='14' y='32' width='12' height='6' fill='#e72b2b'/>
+    <rect x='18' y='10' width='2' height='2' fill='#ffd7e0' opacity='0.9'/>
+    <rect x='22' y='16' width='2' height='2' fill='#ffd7e0' opacity='0.7'/>
+  </g>
+</svg>`);
 const PIXEL_HEART_DATAURL = `data:image/svg+xml;utf8,${PIXEL_HEART_SVG}`;
 
-/* ---------- helper to create heart <img> ---------- */
-function createHeartImg(size=56){
-  const img = document.createElement('img');
-  img.src = PIXEL_HEART_DATAURL;
-  img.width = size;
-  img.height = size;
-  img.className = 'user-heart-img';
-  img.alt = 'heart';
-  img.style.display = 'block';
-  return img;
-}
-
-/* ---------- page elements ---------- */
+/* ---------------------
+  Helpers & DOM refs
+  --------------------- */
 const startBtn = document.getElementById('startBtn');
 const qPopup = document.getElementById('qPopup');
 const yesBtn = document.getElementById('yesBtn');
 const noBtn = document.getElementById('noBtn');
 const heartsLayer = document.getElementById('heartsLayer');
+
+const cuteYesBubble = document.getElementById('cuteYesBubble');
+const cuteNoBubble = document.getElementById('cuteNoBubble');
+const bh1 = document.getElementById('bh1'), bh2 = document.getElementById('bh2'), bh3 = document.getElementById('bh3'), bh4 = document.getElementById('bh4');
+const okYesBtn = document.getElementById('okYesBtn');
 
 const gamePopup = document.getElementById('gamePopup');
 const cells = Array.from(document.querySelectorAll('.cell'));
@@ -254,103 +278,180 @@ const jerseyPopup = document.getElementById('jerseyPopup');
 const jerseyYes = document.getElementById('jerseyYes');
 const jerseyNo = document.getElementById('jerseyNo');
 
-const burstContainer = document.getElementById('burstContainer');
 const bigBurstHeartImg = document.getElementById('bigBurstHeartImg');
 
-function show(el){ el.classList.add('show'); }
-function hide(el){ el.classList.remove('show'); }
+function show(el){ el.classList.add('show'); el.setAttribute('aria-hidden','false'); }
+function hide(el){ el.classList.remove('show'); el.setAttribute('aria-hidden','true'); }
 
-/* ---------- build skyline & stars ---------- */
+/* Ensure start button works */
+startBtn.addEventListener('click', (e)=> {
+  e.stopPropagation();
+  show(qPopup);
+});
+
+/* Build small decorative stars/city */
 (function buildCity(){
   const city = document.getElementById('city');
-  for(let i=0;i<40;i++){
+  for(let i=0;i<36;i++){
     const b=document.createElement('div'); b.className='b';
-    const r=Math.random();
-    if(r>0.84) b.classList.add('x4'); else if(r>0.7) b.classList.add('x2'); else if(r>0.55) b.classList.add('x1'); else if(r>0.4) b.classList.add('x3');
-    if(Math.random()>0.78) b.classList.add('light'); city.appendChild(b);
+    city.appendChild(b);
   }
 })();
 (function buildStars(){
   const s=document.getElementById('stars');
-  for(let i=0;i<60;i++){ const e=document.createElement('i'); e.style.left=(2+Math.random()*96)+'%'; e.style.top=(2+Math.random()*56)+'%'; e.style.opacity=.6+Math.random()*.5; s.appendChild(e); }
+  for(let i=0;i<60;i++){ const e=document.createElement('i'); e.style.left=(2+Math.random()*96)+'%'; e.style.top=(2+Math.random()*56)+'%'; e.style.opacity=.5+Math.random()*.5; s.appendChild(e); }
 })();
 
-/* ---------- start flow ---------- */
-startBtn.addEventListener('click', ()=> show(qPopup));
-
-/* Yes: spawn 1000 hearts then open game */
-yesBtn.addEventListener('click', ()=>{
-  hide(qPopup);
-  spawnManyHearts(1000);
-  setTimeout(()=> { show(gamePopup); resetGame(); }, 1400);
+/* ---------- NEW: put heart images into bubble hearts */ 
+[bh1,bh2,bh3,bh4].forEach(b=> {
+  if(!b) return;
+  b.src = PIXEL_HEART_DATAURL;
+  b.style.width='22px'; b.style.height='22px'; b.style.imageRendering='pixelated';
 });
 
-/* No: broken flow */
-noBtn.addEventListener('click', ()=> { hide(qPopup); show(brokenPopup); });
+/* ---------- Flow: YES shows cute bubble ONLY (Option B requested) ---------- */
+/* Show cute bubble when user clicks "Yes" modal button (does NOT auto-start game).
+   The bubble has its own "Okay baby" button that starts hearts + game. */
+yesBtn.addEventListener('click', ()=>{
+  hide(qPopup);
+  // show cute pastel bubble
+  show(cuteYesBubble);
+  floatBubbleHeartsIn();
+});
+
+/* When user presses the bubble's "Okay baby" button -> spawn hearts and start game */
+okYesBtn.addEventListener('click', ()=>{
+  // close cute bubble
+  floatBubbleHeartsOut();
+  hide(cuteYesBubble);
+  // spawn hearts then open game
+  spawnManyHearts(1000);
+  setTimeout(()=> { show(gamePopup); resetGame(); }, 900);
+});
+
+/* NO: show the sad bubble instead of immediate broken modal */
+noBtn.addEventListener('click', ()=> {
+  hide(qPopup);
+  show(cuteNoBubble);
+});
+
+/* If they confirm 'I'm sure' -> go to broken fallback */
+document.getElementById('noConfirmYes').addEventListener('click', ()=>{
+  hide(cuteNoBubble);
+  show(brokenPopup);
+});
+/* If they choose "Wait — I love you" -> go to YES bubble flow */
+document.getElementById('noConfirmNo').addEventListener('click', ()=>{
+  hide(cuteNoBubble);
+  show(cuteYesBubble);
+  floatBubbleHeartsIn();
+});
+
+/* fallback older jersey/broken buttons (also kept) */
 finalNo.addEventListener('click', ()=> { hide(brokenPopup); setTimeout(()=> show(qPopup),240); });
 finalYes.addEventListener('click', ()=> { hide(brokenPopup); setTimeout(()=> show(jerseyPopup),240); });
 
 jerseyNo.addEventListener('click', ()=> { hide(jerseyPopup); setTimeout(()=> show(brokenPopup),240); });
 jerseyYes.addEventListener('click', ()=> { hide(jerseyPopup); setTimeout(()=> { show(gamePopup); resetGame(); },220); });
 
-/* ---------- hearts functions (batched falling hearts on YES) ---------- */
+/* ---------- little bubble-heart float helpers ---------- */
+let floatInterval = null;
+function floatBubbleHeartsIn(){
+  const bs = [bh1,bh2,bh3,bh4].filter(x=>x);
+  let t=0;
+  // show them and animate bobbing
+  bs.forEach((b,i)=> {
+    b.style.opacity = 0;
+    b.style.transform = 'translate(-50%,-50%) scale(.6)';
+    setTimeout(()=> { b.style.opacity = 1; b.style.transform = `translate(-50%,-50%) scale(1)`; }, i*120);
+  });
+  // gentle random bobbing loop
+  floatInterval = setInterval(()=> {
+    bs.forEach((b,i)=> {
+      const rx = (Math.random()*24 - 12);
+      const ry = (Math.random()*24 - 12);
+      b.style.transform = `translate(${rx}px, ${ry}px) scale(${0.9 + Math.random()*0.25})`;
+    });
+  }, 420);
+}
+function floatBubbleHeartsOut(){
+  const bs = [bh1,bh2,bh3,bh4].filter(x=>x);
+  if(floatInterval) { clearInterval(floatInterval); floatInterval = null; }
+  bs.forEach((b,i)=> {
+    setTimeout(()=> { b.style.opacity = 0; b.style.transform = 'translate(-50%,-50%) scale(.6)'; }, i*80);
+  });
+}
+
+/* ---------- Falling hearts (batched) ---------- */
 function spawnManyHearts(total=1000){
-  let created=0;
-  const batch=40;
-  const interval=setInterval(()=> {
+  let created = 0;
+  const batch = 40;
+  const interval = setInterval(()=> {
     for(let i=0;i<batch && created<total;i++,created++) createFallingHeartImg();
     if(created>=total) clearInterval(interval);
   }, 40);
 }
 function createFallingHeartImg(){
-  const img = createHeartImg(18);
+  const img = document.createElement('img');
+  img.src = PIXEL_HEART_DATAURL;
   img.style.position = 'fixed';
-  img.style.left=(5+Math.random()*90)+'%';
-  img.style.top='-30px';
+  img.style.left = (5 + Math.random()*90) + '%';
+  img.style.top = '-40px';
+  img.style.width = (10 + Math.random()*18) + 'px';
+  img.style.height = 'auto';
   img.style.pointerEvents = 'none';
   heartsLayer.appendChild(img);
-  const dur=2100+Math.random()*2400; const drift=(Math.random()*300-150);
 
+  const dur = 2100 + Math.random()*2400;
+  const drift = (Math.random()*300 - 150);
   img.animate([
     { transform:'translateY(0) scale(.6)', opacity:0 },
     { transform:`translate(${drift}px, ${window.innerHeight*0.95}px) scale(1.06)`, opacity:1 },
     { transform:`translate(${drift*1.08}px, ${window.innerHeight*1.08}px) scale(.9)`, opacity:0 }
-  ], { duration:dur, easing:'cubic-bezier(.2,.8,.2,1)' });
+  ], { duration: dur, easing:'cubic-bezier(.2,.8,.2,1)' });
 
   setTimeout(()=> { try{ heartsLayer.removeChild(img);}catch(e){} }, dur+240);
 }
 
-/* ---------- TIC TAC TOE (player heart now image, cpu X visible) ---------- */
+/* ---------- TIC TAC TOE (player heart image; CPU X) ---------- */
 let board = Array(9).fill(null);
-const user = 'USER', cpu = 'X';
-let locked=false;
-const winLines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+const USER = 'USER', CPU = 'X';
+let locked = false;
+const winLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
-/* render - place centered heart image or small X */
+/* helper to create heart img node at desired size */
+function heartNode(size=56){
+  const img = document.createElement('img');
+  img.src = PIXEL_HEART_DATAURL;
+  img.width = size; img.height = size;
+  img.style.imageRendering = 'pixelated';
+  img.className = 'user-heart-img';
+  return img;
+}
+
 function renderBoard(){
   board.forEach((v,i)=> {
     const el = cells[i];
     el.innerHTML = '';
     el.classList.remove('disabled');
-    el.style.cursor = v ? 'default' : 'pointer';
-    if(v === 'USER'){
-      const img = createHeartImg(56); // medium size (2.b)
-      img.className = 'user-heart-img';
-      el.appendChild(img);
+    if(!v){ el.style.cursor = 'pointer'; }
+    else {
+      el.style.cursor = 'default';
       el.classList.add('disabled');
-    } else if(v === cpu){
-      const span = document.createElement('div');
-      span.className = 'cpu-x';
-      span.textContent = 'X';
-      el.appendChild(span);
-      el.classList.add('disabled');
+      if(v === USER){
+        el.appendChild(heartNode(56));
+      } else {
+        const span = document.createElement('div');
+        span.className = 'cpu-x';
+        span.textContent = 'X';
+        el.appendChild(span);
+      }
     }
   });
 }
-
 function checkWin(b, mark){ return winLines.some(line => line.every(i => b[i]===mark)); }
 
-/* CPU move: play reasonable move but weak enough to let user win */
+/* CPU move: weak-biased so user likely wins */
 function cpuMove(){
   const empties = board.map((v,i)=> v? null : i).filter(x=> x!==null);
   if(!empties.length) return;
@@ -360,15 +461,15 @@ function cpuMove(){
   if(rand < 0.2 && board[4]===null){ pick = 4; } 
   else if(rand < 0.5 && corners.length){ pick = corners[Math.floor(Math.random()*corners.length)]; }
   else { pick = empties[Math.floor(Math.random()*empties.length)]; }
-  board[pick] = cpu;
+  board[pick] = CPU;
 }
 
-/* Force user win early if possible */
+/* force user win if possible */
 function forceUserWinIfPossible(){
   for(const line of winLines){
     const vals = line.map(i=>board[i]);
-    if(vals.filter(v=>v===cpu).length===0 && vals.filter(v=>v===user).length>=1){
-      for(const idx of line) if(!board[idx]) board[idx] = user;
+    if(vals.filter(v=>v===CPU).length===0 && vals.filter(v=>v===USER).length>=1){
+      for(const idx of line) if(!board[idx]) board[idx] = USER;
       return true;
     }
   }
@@ -381,50 +482,37 @@ cells.forEach(c=>{
     const i = Number(c.dataset.i);
     if(locked) return;
     if(board[i]) return;
-    board[i] = user;
+    board[i] = USER;
     renderBoard();
-    if(checkWin(board,user)){
-      locked = true;
-      onPlayerWin();
-      return;
-    }
-    const userCount = board.filter(v=>v===user).length;
+    if(checkWin(board,USER)){ locked=true; onPlayerWin(); return; }
+    const userCount = board.filter(v=>v===USER).length;
     if(userCount >= 3){
-      if(forceUserWinIfPossible()){
-        renderBoard();
-        if(checkWin(board,user)){ locked=true; onPlayerWin(); return; }
-      }
+      if(forceUserWinIfPossible()){ renderBoard(); if(checkWin(board,USER)){ locked=true; onPlayerWin(); return; } }
     }
     locked = true;
     gameMsg.textContent = "CPU thinking...";
     setTimeout(()=> {
       cpuMove();
       renderBoard();
-      if(checkWin(board,cpu)){
-        locked = true;
-        gameMsg.textContent = "CPU won";
-      } else {
-        locked = false;
-        gameMsg.textContent = "Your turn";
-      }
+      if(checkWin(board,CPU)){ locked=true; gameMsg.textContent="CPU won"; }
+      else { locked=false; gameMsg.textContent="Your turn"; }
     }, 420);
   });
 });
 
 function resetGame(){ board = Array(9).fill(null); locked=false; gameMsg.textContent="Your turn"; renderBoard(); }
-resetBtn.addEventListener('click', resetGame);
-closeGameBtn.addEventListener('click', ()=>{ hide(gamePopup); });
+document.getElementById('resetBtn').addEventListener('click', resetGame);
+document.getElementById('closeGameBtn').addEventListener('click', ()=>{ hide(gamePopup); });
 
-/* ---------- on player win: show message + pixel burst (3s) ---------- */
+/* ---------- Win flow: popup + burst (3s) ---------- */
 function onPlayerWin(){
   show(winPopup);
   triggerBigHeartBurst();
   spawnManyHearts(80);
 }
 
-/* Big heart pop -> spawn pixel heart images + yellow pixel sparkles (3s) */
+/* burst: show big heart image then spawn pieces and sparkles for ~3s */
 function triggerBigHeartBurst(){
-  // set big image src then show
   bigBurstHeartImg.src = PIXEL_HEART_DATAURL;
   bigBurstHeartImg.classList.add('show');
 
@@ -433,25 +521,20 @@ function triggerBigHeartBurst(){
   let spawned = 0;
   const pieceInterval = setInterval(()=> {
     const group = 6;
-    for(let g=0; g<group && spawned < pieceCount; g++, spawned++){
-      spawnBurstPieceImg();
-    }
-    if(spawned >= pieceCount) { clearInterval(pieceInterval); }
+    for(let g=0; g<group && spawned < pieceCount; g++, spawned++) spawnBurstPieceImg();
+    if(spawned >= pieceCount) clearInterval(pieceInterval);
   }, 120);
-
   let sspawned = 0;
   const sparkInterval = setInterval(()=> {
     const group = 4;
-    for(let g=0; g<group && sspawned < sparkleCount; g++, sspawned++){
-      spawnSingleSparkle();
-    }
+    for(let g=0; g<group && sspawned < sparkleCount; g++, sspawned++) spawnSingleSparkle();
     if(sspawned >= sparkleCount) clearInterval(sparkInterval);
   }, 140);
 
   setTimeout(()=> { bigBurstHeartImg.classList.remove('show'); }, 900);
 }
 
-/* spawn one burst piece image */
+/* spawn one burst piece (pixel heart image) */
 function spawnBurstPieceImg(){
   const cx = window.innerWidth/2;
   const cy = window.innerHeight/2.6;
@@ -484,7 +567,7 @@ function spawnBurstPieceImg(){
   setTimeout(()=> { try{ document.body.removeChild(img); } catch(e){} }, 2200 + Math.random()*300);
 }
 
-/* spawn tiny yellow pixel sparkle */
+/* tiny yellow pixel sparkle */
 function spawnSingleSparkle(){
   const cx = window.innerWidth/2;
   const cy = window.innerHeight/2.6;
@@ -513,30 +596,24 @@ function spawnSingleSparkle(){
   setTimeout(()=> { try{ document.body.removeChild(s); } catch(e){} }, 2200 + Math.random()*300);
 }
 
-/* continue to letter after win */
+/* Continue to letter */
 continueToLetter.addEventListener('click', ()=>{
   hide(winPopup);
   setTimeout(()=>{ show(letterPopup); setTimeout(()=> paper.classList.add('open'),80); }, 260);
 });
-
-/* close letter */
 closeLetterBtn.addEventListener('click', ()=> {
   paper.classList.remove('open');
   setTimeout(()=> hide(letterPopup), 260);
 });
 
-/* No / broken flow */
-noBtn.addEventListener('click', ()=> { hide(qPopup); show(brokenPopup); });
-finalNo.addEventListener('click', ()=> { hide(brokenPopup); setTimeout(()=> show(qPopup),240); });
-finalYes.addEventListener('click', ()=> { hide(brokenPopup); setTimeout(()=> show(jerseyPopup),240); });
-jerseyNo.addEventListener('click', ()=> { hide(jerseyPopup); setTimeout(()=> show(brokenPopup),240); });
-jerseyYes.addEventListener('click', ()=> { hide(jerseyPopup); setTimeout(()=> { show(gamePopup); resetGame(); },220); });
-
 /* accessibility & init */
-window.addEventListener('keydown', (e)=> { if(e.key==='Escape') document.querySelectorAll('.overlay').forEach(o=> hide(o)); });
-window.addEventListener('load', ()=> { setTimeout(()=> startBtn.classList.add('pop'),200); setTimeout(()=> startBtn.classList.remove('pop'),620); resetGame(); });
+window.addEventListener('keydown', (e)=> { if(e.key==='Escape') {
+  hide(cuteYesBubble); hide(cuteNoBubble);
+  document.querySelectorAll('.overlay').forEach(o=> hide(o));
+}});
+window.addEventListener('load', ()=> { resetGame(); });
 
-/* quick debug helper */
+/* debug helper */
 window.__debugRestart = resetGame;
 </script>
 </body>
