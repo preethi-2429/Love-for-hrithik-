@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>For Hrithik — Pixel Love 💗</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0b0310;
+    --accent:#ff6aa6;
+    --soft:#fff5f9;
+    --muted:#b07b88;
+    --card-border:8px;
+  }
+  html,body{height:100%;margin:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--soft);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  /* stage center */
+  .stage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box;}
+
+  /* pixel scene background built with CSS blocks */
+  .pixel-bg{
+    position:fixed;inset:0;z-index:-5;overflow:hidden;
+    background: linear-gradient(180deg,#0b0310 0%, #1a0820 50%, #2b0c2e 100%);
+    transform: translateZ(0);
+  }
+  /* subtle parallax motion */
+  .pixel-bg .parallax { animation: floatBg 18s linear infinite; transform-origin:center; }
+  @keyframes floatBg { 0%{transform:translateY(0)} 50%{transform:translateY(-14px)} 100%{transform:translateY(0)} }
+
+  /* moon */
+  .moon{
+    position:absolute; width:160px; height:160px; border-radius:50%; left:10%; top:8%;
+    background: radial-gradient(circle at 30% 25%, #fff3f8 0%, #ffe0f0 12%, #ffd2ec 40%, rgba(255,255,255,0) 60%);
+    box-shadow: 0 0 30px rgba(255,150,200,0.12), inset -10px -8px 0 rgba(0,0,0,0.04);
+    image-rendering: pixelated;
+  }
+  /* star dots */
+  .stars{ position:absolute; inset:0; pointer-events:none;}
+  .stars i{ position:absolute; width:3px; height:3px; background:#ffdff0; border-radius:2px; opacity:.9; box-shadow:0 0 6px rgba(255,160,200,0.06); filter: drop-shadow(0 0 6px rgba(255,150,200,0.06)); }
+
+  /* city skyline (pixel blocks) */
+  .city{ position:absolute; bottom:0; left:0; right:0; height:220px; display:flex; align-items:flex-end; gap:4px; padding:0 8px; box-sizing:border-box; }
+  .b{ width:32px; background:#21062a; height:40%; box-shadow: inset 0 -6px 0 rgba(255,150,200,0.03); }
+  .b.x1{ height:55%; }
+  .b.x2{ height:68%; }
+  .b.x3{ height:42%; }
+  .b.x4{ height:75%; }
+  .b.x5{ height:32%; }
+  .b.light{ background: linear-gradient(180deg,#2b072f,#1a0320); }
+
+  /* rooftop area with the couple in center */
+  .rooftop{
+    position:absolute; left:50%; transform:translateX(-50%) translateY(0); bottom:64px; width:640px; max-width:92vw; height:180px; display:flex; align-items:flex-end; justify-content:center; pointer-events:none;
+  }
+  .rooftop .platform{
+    width:480px; height:36px; background: linear-gradient(180deg,#2b0e2b,#19051a); border-top:8px solid rgba(255,210,240,0.06); position:relative; box-shadow: 0 -6px 0 rgba(255,150,200,0.03);
+    border-radius:6px;
+  }
+
+  /* pixel couple built from blocks (simple cute sprite) */
+  .couple{ position:absolute; bottom:36px; left:50%; transform:translateX(-50%); width:160px; height:140px; display:flex; align-items:flex-end; justify-content:center; gap:8px; pointer-events:none; }
+  .char{ width:64px; height:96px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; }
+  .head{ width:40px; height:40px; border-radius:6px; border:4px solid #ff9ecb; display:flex; align-items:center; justify-content:center; font-size:14px; background:#ffdfea; color:#2a0c14; box-shadow:0 6px 0 rgba(255,150,200,0.06); }
+  .body{ width:34px; height:46px; margin-top:6px; border-radius:4px; border:3px solid #ff85b5; background:#ffbcd6; }
+  .gwen .head{ background:#eaf6ff; border-color:#8bb9ff; color:#05293a; }
+  .gwen .body{ background:#bfe7ff; border-color:#7ab5ff; }
+
+  /* leaning / kiss tilt */
+  .leftChar{ transform: translateX(-18px) rotate(-6deg); animation:leanLeft 1s ease forwards; }
+  .rightChar{ transform: translateX(18px) rotate(6deg); animation:leanRight 1s ease forwards; }
+  @keyframes leanLeft{ to { transform: translateX(-8px) rotate(-4deg); } }
+  @keyframes leanRight{ to { transform: translateX(8px) rotate(4deg); } }
+
+  /* subtle glow behind couple */
+  .couple-glow{ position:absolute; bottom:28px; left:50%; transform:translateX(-50%); width:260px; height:120px; filter:blur(20px); background: radial-gradient(circle at 50% 40%, rgba(255,150,200,0.12) 0%, rgba(255,150,200,0.04) 30%, transparent 60%); pointer-events:none; }
+
+  /* UI card in front (center content) */
+  .ui-card{ width:min(820px,96%); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); border-radius:14px; padding:18px; text-align:center; box-shadow: 0 10px 40px rgba(0,0,0,0.36); backdrop-filter: blur(6px); border:6px solid rgba(255,210,240,0.02); }
+
+  /* pixel UI buttons */
+  .big-btn{display:inline-block;padding:14px 18px;border-radius:12px;background:linear-gradient(180deg,#fff,#ffeef8);border:10px solid rgba(255,200,230,0.9);box-shadow:0 12px 0 rgba(255,150,200,0.28);font-family:"Press Start 2P",monospace;color:var(--accent);cursor:pointer;font-size:12px}
+  .big-btn:active{transform:translateY(6px);box-shadow:none}
+
+  /* overlays */
+  .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:60;background:rgba(0,0,0,0.35);visibility:hidden;opacity:0;transition:opacity .18s ease, visibility .18s}
+  .overlay.show{visibility:visible;opacity:1}
+
+  .modal{width:min(460px,94%);background:linear-gradient(180deg,#fff,#fff7fb);border-radius:12px;padding:16px;text-align:center;border:8px solid rgba(255,210,240,0.95);box-shadow:0 12px 40px rgba(12,6,14,0.22)}
+  .modal h2{font-family:"Press Start 2P",monospace;font-size:13px;margin:0 0 8px;color:var(--accent)}
+  .modal p{margin:0 0 12px;color:var(--muted);font-size:14px}
+
+  .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .btn{padding:10px 12px;border-radius:9px;border:6px solid rgba(255,160,210,0.9);background:linear-gradient(180deg,#fff,#fff0f6);color:var(--accent);cursor:pointer;font-family:"Press Start 2P",monospace;font-size:11px;box-shadow:0 8px 0 rgba(255,155,200,0.28)}
+  .btn:active{transform:translateY(4px);box-shadow:0 3px 0 rgba(255,150,200,0.12)}
+  .pixel-link{display:inline-block;padding:8px 10px;border-radius:10px;border:10px solid rgba(255,210,240,0.95);background:linear-gradient(180deg,#fff,#fff6fb);cursor:pointer;font-family:"Press Start 2P",monospace;color:var(--accent);font-size:11px}
+
+  /* folded paper letter */
+  .letter-card{ width:100%; max-width:420px; margin:8px auto; perspective:900px; }
+  .paper{ width:100%; background:#fff; border-radius:10px; padding:14px; transform-origin:top center; transform: rotateX(-90deg) translateY(-10px); transition: transform .6s cubic-bezier(.2,.8,.2,1); border:6px dashed rgba(220,140,170,0.12); color:#3a2e33; font-size:15px; text-align:left; }
+  .paper.open{ transform: rotateX(0deg) translateY(0); }
+
+  /* 'This is us' small animation popup (we'll reuse rooftop scene scaled) */
+  .kiss-mini{ width:100%; height:160px; background: linear-gradient(180deg,#fff,#fff6fb); border-radius:8px; border:8px solid rgba(255,210,240,0.95); overflow:hidden; margin:8px 0; display:flex; align-items:center; justify-content:center; }
+
+  /* Tic Tac Toe */
+  .board{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:260px;max-width:86vw;margin:10px auto}
+  .cell{height:72px;background:linear-gradient(180deg,#fff,#fff6fb);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:42px;cursor:pointer;box-shadow:0 8px 0 rgba(255,200,220,0.28);user-select:none;font-family:"Press Start 2P",monospace}
+  .cell.disabled{cursor:not-allowed;opacity:0.8}
+
+  .tiny{font-size:12px;color:var(--muted)}
+
+  @media (max-width:520px){
+    .cell{height:56px;font-size:34px}
+    .city{height:180px}
+  }
+
+</style>
+</head>
+<body>
+  <!-- Pixel background scene -->
+  <div class="pixel-bg">
+    <div class="parallax">
+      <div class="moon"></div>
+      <div class="stars" id="stars"></div>
+      <div class="city" id="city">
+        <!-- generate many building blocks -->
+      </div>
+
+      <div class="rooftop" aria-hidden="true">
+        <div class="couple-glow"></div>
+        <div class="platform"></div>
+        <div class="couple" aria-hidden="true">
+          <div class="char leftChar">
+            <div class="head">:)</div>
+            <div class="body"></div>
+          </div>
+          <div class="char gwen rightChar">
+            <div class="head">:D</div>
+            <div class="body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UI -->
+  <main class="stage" role="main">
+    <div class="ui-card">
+      <h1 style="font-family: 'Press Start 2P', monospace; color:var(--accent); margin:0 0 8px 0;">For Hrithik 💗</h1>
+      <p class="tiny" style="margin:0 0 14px 0;color:var(--muted)">A little pixel surprise — open and be honest 🥺</p>
+
+      <button id="startBtn" class="big-btn">Hey love — click me 🌷</button>
+      <div style="margin-top:10px;color:var(--muted);font-size:12px">Made with rose milk & pixel love</div>
+    </div>
+  </main>
+
+  <!-- hearts layer -->
+  <div id="heartsLayer" style="position:fixed;inset:0;pointer-events:none;z-index:80;overflow:hidden"></div>
+
+  <!-- initial question popup -->
+  <div id="qPopup" class="overlay" role="dialog" aria-modal="true">
+    <div class="modal">
+      <h2>Do you love your pasandida aurat🌷😚💗 ?</h2>
+      <p class="tiny">Be honest — your heart matters ✨</p>
+      <div class="row">
+        <button id="yesBtn" class="btn">Yes</button>
+        <button id="noBtn" class="btn">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- after hearts: small pixel link popup -->
+  <div id="linkPopup" class="overlay">
+    <div class="modal">
+      <h2>Little surprise</h2>
+      <p class="tiny">Click the pixel link to read my letter 💌</p>
+      <div class="row"><div id="pixelLetterBtn" class="pixel-link">Click me my handsome</div></div>
+    </div>
+  </div>
+
+  <!-- letter popup -->
+  <div id="letterPopup" class="overlay">
+    <div class="modal">
+      <h2 style="font-family:Poppins, sans-serif; font-weight:600; color:var(--accent);">A letter for you</h2>
+
+      <div class="letter-card">
+        <div id="paper" class="paper">
+          <h3 style="margin:0 0 8px 0">My Dearest Hrithik,</h3>
+          <p>
+            I don’t think you will ever truly know how deeply I love you.<br>
+            You are not just a part of my life — you are the meaning of it.<br><br>
+
+            Every version of my future has you in it, every wish I make has your name in it.<br><br>
+
+            Every 11:11, I still wish the same thing: that I never hurt you, and that I become someone who only gives you love, peace, and comfort.<br><br>
+
+            I’m trying, and I always will, because you matter that much to me.<br><br>
+
+            You are my safe place, my miracle, my favourite feeling.<br>
+            I don’t ever want a life where I’m not loving you.<br><br>
+
+            I love you endlessly.<br><br>
+
+            ~ Your Pasandida Aurat 🌷
+          </p>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:12px;">
+        <button id="closeLetterBtn" class="btn">Close ❌</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- this is us popup showing mini rooftop (pixel) -->
+  <div id="thisPopup" class="overlay">
+    <div class="modal">
+      <h2>This is us 💗</h2>
+      <div class="kiss-mini" aria-hidden="true">
+        <!-- re-create a tiny scene -->
+        <div style="width:100%;display:flex;align-items:center;justify-content:center;height:100%;position:relative">
+          <div style="width:200px;height:120px;position:relative;">
+            <div style="position:absolute;left:0;right:0;bottom:8px;height:26px;background:linear-gradient(180deg,#2b0e2b,#19051a);border-radius:6px;border-top:6px solid rgba(255,210,240,0.06)"></div>
+            <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:28px;display:flex;gap:6px;align-items:flex-end;justify-content:center">
+              <div style="width:36px;height:60px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end">
+                <div style="width:28px;height:28px;border-radius:5px;border:3px solid #ff9ecb;background:#ffdfea;display:flex;align-items:center;justify-content:center;font-size:12px">:)</div>
+                <div style="width:24px;height:34px;background:#ffbcd6;border-radius:3px;border:3px solid #ff85b5;margin-top:4px"></div>
+              </div>
+              <div style="width:36px;height:60px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end">
+                <div style="width:28px;height:28px;border-radius:5px;border:3px solid #7ab5ff;background:#eaf6ff;display:flex;align-items:center;justify-content:center;font-size:12px">:D</div>
+                <div style="width:24px;height:34px;background:#bfe7ff;border-radius:3px;border:3px solid:#7ab5ff;margin-top:4px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px" class="tiny">Two pixel hearts for us 😽</div>
+
+      <div class="row" style="margin-top:12px;">
+        <button id="closeThisBtn" class="btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- love game popup -->
+  <div id="gamePopup" class="overlay">
+    <div class="modal">
+      <h2>Love Game — Tic Tac Toe</h2>
+      <p class="tiny">You're ♥. CPU is X. Win my heart!</p>
+
+      <div class="board" id="board">
+        <div class="cell" data-i="0"></div>
+        <div class="cell" data-i="1"></div>
+        <div class="cell" data-i="2"></div>
+        <div class="cell" data-i="3"></div>
+        <div class="cell" data-i="4"></div>
+        <div class="cell" data-i="5"></div>
+        <div class="cell" data-i="6"></div>
+        <div class="cell" data-i="7"></div>
+        <div class="cell" data-i="8"></div>
+      </div>
+
+      <div class="row" style="margin-top:12px;">
+        <button id="resetBtn" class="btn">Reset</button>
+        <button id="closeGameBtn" class="btn">Close</button>
+      </div>
+
+      <div style="margin-top:8px" id="gameMsg" class="tiny">Your turn</div>
+    </div>
+  </div>
+
+  <!-- win popup -->
+  <div id="winPopup" class="overlay">
+    <div class="modal">
+      <h2>Yaayy!! 🎉</h2>
+      <p>You win my heart 💗</p>
+      <div class="row"><button id="winCloseBtn" class="btn">Close</button></div>
+    </div>
+  </div>
+
+  <!-- broken popup sequence -->
+  <div id="brokenPopup" class="overlay">
+    <div class="modal">
+      <h2>🥺 Are you sure?</h2>
+      <p class="tiny">This will make me sad…</p>
+      <div class="row">
+        <button id="finalYes" class="btn">Yes</button>
+        <button id="finalNo" class="btn">No</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="jerseyPopup" class="overlay">
+    <div class="modal">
+      <h2>I’ll buy you a jersey!!</h2>
+      <p class="tiny">Do you accept?</p>
+      <div class="row">
+        <button id="jerseyYes" class="btn">Yes</button>
+        <button id="jerseyNo" class="btn">No</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* -------------------------
+   small helpers & setup
+   ------------------------- */
+const startBtn = document.getElementById('startBtn');
+const qPopup = document.getElementById('qPopup');
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const heartsLayer = document.getElementById('heartsLayer');
+
+const linkPopup = document.getElementById('linkPopup');
+const pixelLetterBtn = document.getElementById('pixelLetterBtn');
+
+const letterPopup = document.getElementById('letterPopup');
+const paper = document.getElementById('paper');
+const closeLetterBtn = document.getElementById('closeLetterBtn');
+
+const thisPopup = document.getElementById('thisPopup');
+const closeThisBtn = document.getElementById('closeThisBtn');
+
+const gamePopup = document.getElementById('gamePopup');
+const cells = Array.from(document.querySelectorAll('.cell'));
+const resetBtn = document.getElementById('resetBtn');
+const closeGameBtn = document.getElementById('closeGameBtn');
+const gameMsg = document.getElementById('gameMsg');
+
+const winPopup = document.getElementById('winPopup');
+const winCloseBtn = document.getElementById('winCloseBtn');
+
+const brokenPopup = document.getElementById('brokenPopup');
+const finalYes = document.getElementById('finalYes');
+const finalNo = document.getElementById('finalNo');
+
+const jerseyPopup = document.getElementById('jerseyPopup');
+const jerseyYes = document.getElementById('jerseyYes');
+const jerseyNo = document.getElementById('jerseyNo');
+
+function show(el){ el.classList.add('show'); }
+function hide(el){ el.classList.remove('show'); }
+
+/* generate skyline */
+(function buildCity(){
+  const city = document.getElementById('city');
+  // create 40 blocks of varying heights
+  for(let i=0;i<40;i++){
+    const b = document.createElement('div');
+    b.className = 'b';
+    const r = Math.random();
+    if(r>0.84) b.classList.add('x4');
+    else if(r>0.7) b.classList.add('x2');
+    else if(r>0.55) b.classList.add('x1');
+    else if(r>0.4) b.classList.add('x3');
+    if(Math.random()>0.78) b.classList.add('light');
+    city.appendChild(b);
+  }
+})();
+
+/* generate random stars */
+(function buildStars(){
+  const s = document.getElementById('stars');
+  for(let i=0;i<60;i++){
+    const el = document.createElement('i');
+    el.style.left = (2 + Math.random()*96) + '%';
+    el.style.top = (2 + Math.random()*56) + '%';
+    el.style.opacity = 0.6 + Math.random()*0.5;
+    el.style.transform = `scale(${0.7 + Math.random()*1.2})`;
+    s.appendChild(el);
+  }
+})();
+
+/* start button */
+startBtn.addEventListener('click', ()=> show(qPopup));
+
+/* YES path: spawn 1000 hearts in staggered batches for performance */
+yesBtn.addEventListener('click', ()=>{
+  hide(qPopup);
+  spawnManyHearts(1000);
+  setTimeout(()=> show(linkPopup), 1400);
+});
+
+/* NO path: show are-you-sure popup */
+noBtn.addEventListener('click', ()=>{
+  hide(qPopup);
+  show(brokenPopup);
+});
+
+/* broken path actions */
+finalNo.addEventListener('click', ()=> { hide(brokenPopup); setTimeout(()=> show(qPopup),240); });
+finalYes.addEventListener('click', ()=> { hide(brokenPopup); setTimeout(()=> show(jerseyPopup),240); });
+
+jerseyNo.addEventListener('click', ()=> { hide(jerseyPopup); setTimeout(()=> show(brokenPopup),240); });
+jerseyYes.addEventListener('click', ()=> { hide(jerseyPopup); setTimeout(()=> show(linkPopup),240); });
+
+/* link -> letter */
+pixelLetterBtn.addEventListener('click', ()=> { hide(linkPopup); setTimeout(openLetter,240); });
+
+function openLetter(){
+  show(letterPopup);
+  // flip open paper
+  setTimeout(()=> paper.classList.add('open'), 80);
+}
+
+/* close letter -> show this-is-us and then love game popup */
+closeLetterBtn.addEventListener('click', ()=>{
+  paper.classList.remove('open');
+  setTimeout(()=> { hide(letterPopup); show(thisPopup); playMiniKiss(); }, 360);
+  setTimeout(()=> { show(gamePopup); resetGame(); }, 1200);
+});
+
+/* this-is-us close */
+closeThisBtn.addEventListener('click', ()=> hide(thisPopup));
+
+/* mini kiss animation (we used CSS walking earlier) */
+function playMiniKiss(){
+  // small hearts around
+  spawnManyHearts(18, 300);
+}
+
+/* -------- hearts spawning (1000 hearts) --------
+   We batch-create hearts in groups to avoid freezing.
+   Each heart uses Web Animations and removed after done.
+*/
+function spawnManyHearts(total=1000, batchMs=50){
+  let created = 0;
+  const batchSize = 40; // create 40 hearts per interval
+  const interval = setInterval(()=> {
+    for(let i=0;i<batchSize && created<total;i++,created++){
+      createHeart();
+    }
+    if(created>=total) clearInterval(interval);
+  }, batchMs);
+}
+
+function createHeart(){
+  const el = document.createElement('div');
+  el.className = 'heart';
+  el.textContent = '💗';
+  // random start x
+  el.style.left = (5 + Math.random()*90) + '%';
+  el.style.top = '-30px';
+  // add slight scale/pixel look
+  el.style.fontSize = (10 + Math.random()*18) + 'px';
+  heartsLayer.appendC
