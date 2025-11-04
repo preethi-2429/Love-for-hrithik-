@@ -10,6 +10,7 @@
 <style>
 :root{
   --bg:#0b0310; --accent:#ff6aa6; --muted:#b07b88; --soft:#fff6fb;
+  --pixel-red:#e72b2b;
 }
 html,body{height:100%;margin:0;font-family:Poppins,system-ui,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--soft);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 /* Background */
@@ -46,6 +47,7 @@ h1{font-family:"Press Start 2P",monospace;color:var(--accent);margin:0 0 8px 0}
 .modal{width:min(520px,94%);background:linear-gradient(180deg,#fff,#fff7fb);border-radius:12px;padding:16px;text-align:center;border:8px solid rgba(255,210,240,0.95);box-shadow:0 12px 40px rgba(12,6,14,0.22)}
 .modal h2{font-family:"Press Start 2P",monospace;font-size:13px;margin:0 0 8px;color:var(--accent)}
 .modal p{margin:0 0 12px;color:var(--muted);font-size:14px}
+
 .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .btn{padding:10px 12px;border-radius:9px;border:6px solid rgba(255,160,210,0.9);background:linear-gradient(180deg,#fff,#fff0f6);color:var(--accent);cursor:pointer;font-family:"Press Start 2P",monospace;font-size:11px;box-shadow:0 8px 0 rgba(255,155,200,0.28)}
 .btn:active{transform:translateY(4px);box-shadow:0 3px 0 rgba(255,150,200,0.12)}
@@ -56,8 +58,12 @@ h1{font-family:"Press Start 2P",monospace;color:var(--accent);margin:0 0 8px 0}
 .paper{width:100%;background:#fff;border-radius:10px;padding:14px;transform-origin:top center;transform:rotateX(-90deg) translateY(-10px);transition:transform .6s;border:6px dashed rgba(220,140,170,0.12);color:#3a2e33;font-size:15px;text-align:left}
 .paper.open{transform:rotateX(0deg) translateY(0)}
 .board{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:260px;max-width:86vw;margin:10px auto}
-.cell{height:72px;background:linear-gradient(180deg,#fff,#fff6fb);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:42px;cursor:pointer;box-shadow:0 8px 0 rgba(255,200,220,0.28);user-select:none;font-family:"Press Start 2P",monospace}
+.cell{height:72px;background:linear-gradient(180deg,#fff,#fff6fb);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 0 rgba(255,200,220,0.28);user-select:none;font-family:"Press Start 2P",monospace}
 .cell.disabled{cursor:not-allowed;opacity:0.8}
+
+/* center symbols */
+.user-heart{font-size:56px;line-height:1;margin:0;color:var(--pixel-red); /* large centered heart */ text-shadow: 0 2px 0 rgba(0,0,0,0.12);}
+.cpu-x{font-size:28px;line-height:1;margin:0;color:#2b2b2b;opacity:0.92}
 
 /* hearts layer */
 #heartsLayer{position:fixed;inset:0;pointer-events:none;z-index:85;overflow:hidden}
@@ -68,13 +74,13 @@ h1{font-family:"Press Start 2P",monospace;color:var(--accent);margin:0 0 8px 0}
 .big-burst-heart.show{transform:scale(1);opacity:1}
 
 /* burst-piece: pixel heart */
-.burst-piece{position:fixed;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:16px;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.9);transition:transform 900ms cubic-bezier(.2,.9,.2,1),opacity 900ms ease;filter:drop-shadow(0 6px 18px rgba(200,40,80,0.12));color:#e72b2b}
+.burst-piece{position:fixed;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:16px;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.9);transition:transform 900ms cubic-bezier(.2,.9,.2,1),opacity 900ms ease;filter:drop-shadow(0 6px 18px rgba(200,40,80,0.12));color:var(--pixel-red)}
 
 /* pixel sparkle (small square) */
 .sparkle{position:fixed;width:8px;height:8px;background:#fff;border-radius:2px;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.6);transition:transform 900ms cubic-bezier(.2,.9,.2,1),opacity 900ms ease;filter:drop-shadow(0 4px 8px rgba(255,200,220,0.06))}
 
 /* responsive */
-@media(max-width:520px){.cell{height:56px;font-size:34px}.big-burst-heart{font-size:86px}.paper{font-size:14px}}
+@media(max-width:520px){.cell{height:56px}.user-heart{font-size:44px}.cpu-x{font-size:22px}.big-burst-heart{font-size:86px}.paper{font-size:14px}}
 </style>
 </head>
 <body>
@@ -239,57 +245,98 @@ function createFallingHeart(){
 
 /* ---------- TIC TAC TOE (super easy) ---------- */
 let board = Array(9).fill(null);
-const user = '❤', cpu = 'X';
+const user = 'USER', cpu = 'X';
 let locked=false;
 const winLines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
-function renderBoard(){ board.forEach((v,i)=> { const el=cells[i]; el.textContent = v? v : ''; if(v) el.classList.add('disabled'); else el.classList.remove('disabled'); }); }
-function checkWin(b, mark){ return winLines.some(line => line.every(i => b[i]===mark)); }
-
-function cpuMove(){
-  const empties = board.map((v,i)=> v? null : i).filter(x=> x!==null);
-  if(empties.length){
-    const pick = empties[Math.floor(Math.random()*empties.length)];
-    board[pick]=cpu;
-  }
+/* render - place centered heart or small X */
+function renderBoard(){
+  board.forEach((v,i)=> {
+    const el = cells[i];
+    if(!v){ el.innerHTML = ''; el.classList.remove('disabled'); el.style.cursor = 'pointer'; }
+    else if(v === 'USER'){
+      el.innerHTML = `<span class="user-heart">❤</span>`;
+      el.classList.add('disabled');
+      el.style.cursor = 'default';
+    } else {
+      el.innerHTML = `<span class="cpu-x">X</span>`;
+      el.classList.add('disabled');
+      el.style.cursor = 'default';
+    }
+  });
 }
 
+function checkWin(b, mark){ return winLines.some(line => line.every(i => b[i]===mark)); }
+
+/* CPU move: play a "reasonable" move but still weak enough to let user win */
+function cpuMove(){
+  // If center empty, sometimes take it (but often leave it so player can center)
+  const empties = board.map((v,i)=> v? null : i).filter(x=> x!==null);
+  if(!empties.length) return;
+  // small bias: 30% pick random corner, 20% pick center, else random
+  const rand = Math.random();
+  let pick = null;
+  const corners = [0,2,6,8].filter(i => board[i]===null);
+  if(rand < 0.2 && board[4]===null){ pick = 4; } 
+  else if(rand < 0.5 && corners.length){ pick = corners[Math.floor(Math.random()*corners.length)]; }
+  else { pick = empties[Math.floor(Math.random()*empties.length)]; }
+  board[pick] = cpu;
+}
+
+/* Force user win strategy: if user has at least one mark, later fill a line for them */
 function forceUserWinIfPossible(){
   for(const line of winLines){
     const vals = line.map(i=>board[i]);
     if(vals.filter(v=>v===cpu).length===0 && vals.filter(v=>v===user).length>=1){
-      for(const idx of line) if(!board[idx]) board[idx]=user;
+      for(const idx of line) if(!board[idx]) board[idx] = user;
       return true;
     }
   }
   return false;
 }
 
+/* cell click handling */
 cells.forEach(c=>{
   c.addEventListener('click', ()=>{
     const i = Number(c.dataset.i);
     if(locked) return;
     if(board[i]) return;
-    board[i]=user;
+    board[i] = user;
     renderBoard();
+    // immediate win?
     if(checkWin(board,user)){
-      locked=true;
+      locked = true;
       onPlayerWin();
       return;
     }
+    // if user made many moves, force a win
     const userCount = board.filter(v=>v===user).length;
-    if(userCount>=3){
+    if(userCount >= 3){
       if(forceUserWinIfPossible()){
         renderBoard();
         if(checkWin(board,user)){ locked=true; onPlayerWin(); return; }
       }
     }
-    locked=true; document.getElementById('gameMsg').textContent="CPU thinking...";
-    setTimeout(()=>{ cpuMove(); renderBoard(); if(checkWin(board,cpu)){ locked=true; document.getElementById('gameMsg').textContent="CPU won"; } else { locked=false; document.getElementById('gameMsg').textContent="Your turn"; } },420);
+    // CPU takes its move after a short delay
+    locked = true;
+    gameMsg.textContent = "CPU thinking...";
+    setTimeout(()=> {
+      cpuMove();
+      renderBoard();
+      if(checkWin(board,cpu)){
+        locked = true;
+        gameMsg.textContent = "CPU won";
+        // (rare) if CPU accidentally wins, we can convert it to user win to keep it sweet:
+        // but here we will just continue (you can tweak)
+      } else {
+        locked = false;
+        gameMsg.textContent = "Your turn";
+      }
+    }, 420);
   });
 });
 
-function resetGame(){ board = Array(9).fill(null); locked=false; document.getElementById('gameMsg').textContent="Your turn"; renderBoard(); }
+function resetGame(){ board = Array(9).fill(null); locked=false; gameMsg.textContent="Your turn"; renderBoard(); }
 resetBtn.addEventListener('click', resetGame);
 closeGameBtn.addEventListener('click', ()=>{ hide(gamePopup); });
 
@@ -303,21 +350,17 @@ function onPlayerWin(){
 /* Big heart pop -> then many small hearts + sparkles from center (3s) */
 function triggerBigHeartBurst(){
   bigBurstHeart.classList.add('show');
-  // spawn pieces and sparkles over the next 3 seconds
   const totalDuration = 3000;
   const pieceCount = 48;
   const sparkleCount = 28;
-  // spawn pieces in small groups to feel like explosion
   let spawned = 0;
   const pieceInterval = setInterval(()=> {
-    const group = 6; // spawn six at a time
+    const group = 6;
     for(let g=0; g<group && spawned < pieceCount; g++, spawned++){
       spawnSinglePiece();
     }
     if(spawned >= pieceCount) { clearInterval(pieceInterval); }
   }, 120);
-
-  // spawn sparkles similarly
   let sspawned = 0;
   const sparkInterval = setInterval(()=> {
     const group = 4;
@@ -326,12 +369,7 @@ function triggerBigHeartBurst(){
     }
     if(sspawned >= sparkleCount) clearInterval(sparkInterval);
   }, 140);
-
-  // hide big heart after pop
   setTimeout(()=> { bigBurstHeart.classList.remove('show'); }, 900);
-
-  // ensure cleanup after totalDuration + buffer
-  setTimeout(()=> { /* nothing needed, pieces remove themselves */ }, totalDuration + 800);
 }
 
 /* spawn one burst piece (red pixel heart) */
@@ -344,107 +382,65 @@ function spawnSinglePiece(){
   el.style.left = cx + 'px';
   el.style.top = cy + 'px';
   document.body.appendChild(el);
-
-  // choose trajectory
   const angle = Math.random()*Math.PI*2;
   const dist = 80 + Math.random()*260;
   const tx = cx + Math.cos(angle)*dist;
   const ty = cy + Math.sin(angle)*(dist*0.6);
-
-  // animate outwards
   requestAnimationFrame(()=> {
-    // tiny delay so transition applies
     setTimeout(()=> {
       el.style.opacity = 1;
-      el.style.transform = `translate(${tx - cx}px, ${ty - cy}px) scale(${0.9 + Math.random()*0.6})`;
-    }, 20);
-  });
-
-  // fade and shrink after 900-1200ms
-  setTimeout(()=> {
-    el.style.transition = 'transform 900ms cubic-bezier(.2,.9,.2,1), opacity 900ms ease';
-    el.style.opacity = 0;
-    el.style.transform += ' scale(0.6)';
-  }, 900 + Math.random()*220);
-
-  // remove
-  setTimeout(()=> { try{ document.body.removeChild(el); } catch(e){} }, 2200 + Math.random()*300);
-}
-
-/* spawn one pixel sparkle */
-function spawnSingleSparkle(){
-  const cx = window.innerWidth/2;
-  const cy = window.innerHeight/2.6;
-  const s = document.createElement('div');
-  s.className = 'sparkle';
-  s.style.left = cx + 'px';
-  s.style.top = cy + 'px';
-  document.body.appendChild(s);
-
-  const angle = Math.random()*Math.PI*2;
-  const dist = 40 + Math.random()*160;
-  const tx = cx + Math.cos(angle)*dist;
-  const ty = cy + Math.sin(angle)*(dist/1.6);
-
-  setTimeout(()=> {
-    s.style.opacity = 1;
-    s.style.transform = `translate(${tx - cx}px, ${ty - cy}px) scale(1.1)`;
-  }, 30 + Math.random()*120);
-
-  setTimeout(()=> {
-    s.style.transition = 'transform 900ms cubic-bezier(.2,.9,.2,1), opacity 900ms ease';
-    el.style.opacity = 0;
-    el.style.transform += ' scale(0.6)';
-  }, 900 + Math.random()*220);
-
-  // remove
-  setTimeout(()=> { try{ document.body.removeChild(el); } catch(e){} }, 2200 + Math.random()*300);
-}
-
-/* spawn one pixel sparkle */
-function spawnSingleSparkle(){
-  const cx = window.innerWidth/2;
-  const cy = window.innerHeight/2.6;
-  const s = document.createElement('div');
-  s.className = 'sparkle';
-  s.style.left = cx + 'px';
-  s.style.top = cy + 'px';
-  document.body.appendChild(s);
-
-  const angle = Math.random()*Math.PI*2;
-  const dist = 40 + Math.random()*160;
-  const tx = cx + Math.cos(angle)*dist;
-  const ty = cy + Math.sin(angle)*(dist/1.6);
-
-  setTimeout(()=> {
-    s.style.opacity = 1;
-    s.style.transform = `translate(${tx - cx}px, ${ty - cy}px) scale(1.1)`;
-  }, 30 + Math.random()*120);
-
+      el.style.transform = `translate(${tx - cx}px, ${ty - cy}px) scale(${0.9 + Math.random()*120);
   setTimeout(()=> {
     s.style.transition = 'transform 900ms cubic-bezier(.2,.9,.2,1), opacity 900ms ease';
     s.style.opacity = 0;
     s.style.transform += ' scale(0.4)';
   }, 900 + Math.random()*300);
-
   setTimeout(()=> { try{ document.body.removeChild(s); } catch(e){} }, 2200 + Math.random()*300);
 }
 
 /* continue to letter after win */
-continueToLetter.addEventListener('click', ()=>{
+const continueToLetterBtn = document.getElementById('continueToLetter');
+continueToLetterBtn.addEventListener('click', ()=>{
   hide(winPopup);
   setTimeout(()=>{ show(letterPopup); setTimeout(()=> paper.classList.add('open'),80); }, 260);
 });
 
-/* close letter */
+/* letter close */
 closeLetterBtn.addEventListener('click', ()=> {
   paper.classList.remove('open');
   setTimeout(()=> hide(letterPopup), 260);
 });
 
+/* No / broken flow */
+noBtn.addEventListener('click', ()=> { hide(qPopup); show(brokenPopup); });
+finalNo.addEventListener('click', ()=> { hide(brokenPopup); setTimeout(()=> show(qPopup),240); });
+finalYes.addEventListener('click', ()=> { hide(brokenPopup); setTimeout(()=> show(jerseyPopup),240); });
+jerseyNo.addEventListener('click', ()=> { hide(jerseyPopup); setTimeout(()=> show(brokenPopup),240); });
+jerseyYes.addEventListener('click', ()=> { hide(jerseyPopup); setTimeout(()=> { show(gamePopup); resetGame(); },220); });
+
 /* accessibility */
 window.addEventListener('keydown', (e)=> { if(e.key==='Escape') document.querySelectorAll('.overlay').forEach(o=> hide(o)); });
+
+/* build city & stars on load */
+(function buildCity(){
+  const city = document.getElementById('city');
+  for(let i=0;i<40;i++){
+    const b=document.createElement('div'); b.className='b';
+    const r=Math.random();
+    if(r>0.84) b.classList.add('x4'); else if(r>0.7) b.classList.add('x2'); else if(r>0.55) b.classList.add('x1'); else if(r>0.4) b.classList.add('x3');
+    if(Math.random()>0.78) b.classList.add('light'); city.appendChild(b);
+  }
+})();
+(function buildStars(){
+  const s=document.getElementById('stars');
+  for(let i=0;i<60;i++){ const e=document.createElement('i'); e.style.left=(2+Math.random()*96)+'%'; e.style.top=(2+Math.random()*56)+'%'; e.style.opacity=.6+Math.random()*.5; s.appendChild(e); }
+})();
+
+/* small UI flourish & initial reset */
 window.addEventListener('load', ()=> { setTimeout(()=> startBtn.classList.add('pop'),200); setTimeout(()=> startBtn.classList.remove('pop'),620); resetGame(); });
+
+/* exported in-page helper to test quickly from console if needed */
+window.__debugRestart = resetGame;
 </script>
 </body>
 </html>
