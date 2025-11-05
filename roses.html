@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rose Surprise</title>
+<style>
+    body {
+        background: #ffeef4;
+        font-family: "Verdana", sans-serif;
+        text-align: center;
+    }
+
+    #roseBtn {
+        background: #ff8fab;
+        border: none;
+        color: white;
+        font-size: 18px;
+        padding: 12px 22px;
+        border-radius: 12px;
+        cursor: pointer;
+        margin-top: 50px;
+        transition: 0.3s;
+    }
+    #roseBtn:hover {
+        transform: scale(1.1);
+        background: #ff6f91;
+    }
+
+    .bouquet-container {
+        display: none;
+        margin-top: 40px;
+        animation: fadeIn 1.4s ease forwards;
+    }
+
+    .bouquet-img {
+        width: 200px;
+        image-rendering: pixelated;
+    }
+
+    .bouquet-note {
+        font-size: 20px;
+        margin-top: 12px;
+        color: #d60055;
+        font-weight: 600;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Floating petals */
+    .petal {
+        position: fixed;
+        top: -20px;
+        width: 25px;
+        height: 25px;
+        background-image: url('https://cdn-icons-png.flaticon.com/512/4150/4150897.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        animation: fall 4s linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(100vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<button id="roseBtn">Tap for a surprise 🌹</button>
+
+<div class="bouquet-container" id="roseBox">
+    <img src="https://i.imgur.com/3jIsaY0.png" class="bouquet-img">
+    <div class="bouquet-note">Bouquet for my handsome hard-working man 🌹😚🫶🏻</div>
+</div>
+
+<script>
+    const roseBtn = document.getElementById("roseBtn");
+    const roseBox = document.getElementById("roseBox");
+
+    function createPetal() {
+        const petal = document.createElement("div");
+        petal.classList.add("petal");
+        petal.style.left = Math.random() * window.innerWidth + "px";
+        petal.style.animationDuration = (3 + Math.random() * 2) + "s";
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 4000);
+    }
+
+    roseBtn.addEventListener("click", () => {
+        roseBox.style.display = "block";
+        for (let i = 0; i < 20; i++) {
+            setTimeout(createPetal, i * 200);
+        }
+    });
+</script>
+
+</body>
+</html>
